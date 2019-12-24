@@ -3,20 +3,24 @@ import uuid from 'uuid';
 import TableBodyRows from './TableBodyRows';
 import SearchField from './SearchField';
 import AddRow from './AddRow';
+import Warning from './Warning';
 
 function Table({
   users,
+  alerts,
   searchChange,
-  updateItem,
-  delItem,
-  addItem,
-  editItem,
+  updateUser,
+  delUser,
+  addUser,
+  editUser,
   editing,
   currentId
 }) {
+  // nextId is the id at 'addUser row',
+  // which will be the id for 'newUser'
   // if there is no data item, set the 'nextId' to 1
   const nextId = users.length ? +users[users.length - 1].id + 1 : 1;
-
+  const hasAlert = alerts.isLoading || alerts.isEmpty || alerts.isError;
   return (
     <div className="card mx-auto w-75">
       <div className="card-header text-white bg-info clearfix">
@@ -29,6 +33,7 @@ function Table({
           </div>
         </div>
       </div>
+      {hasAlert && <Warning alerts={alerts} />}
       <div className="card-body">
         <table className="table table-striped">
           <thead>
@@ -50,10 +55,10 @@ function Table({
                     name={user.name}
                     username={user.username}
                     email={user.email}
-                    updateItem={updateItem}
-                    delItem={delItem}
-                    editItem={editItem}
-                    addItem={addItem}
+                    updateUser={updateUser}
+                    delUser={delUser}
+                    editUser={editUser}
+                    addUser={addUser}
                     editing={editing}
                     currentId={currentId}
                   />
@@ -67,7 +72,7 @@ function Table({
               </tr>
             )}
 
-            <AddRow nextId={nextId} addItem={addItem} />
+            <AddRow nextId={nextId} addUser={addUser} />
           </tbody>
         </table>
       </div>

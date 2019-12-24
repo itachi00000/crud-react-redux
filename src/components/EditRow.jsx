@@ -9,29 +9,29 @@ export default class EditRow extends React.Component {
       username: props.username,
       email: props.email
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
+    this.handleChangeInput = this.handleChangeInput.bind(this);
+    this.handleUpdateBtn = this.handleUpdateBtn.bind(this);
+    this.handleCancelBtn = this.handleCancelBtn.bind(this);
   }
 
-  handleChange(e) {
+  handleChangeInput(e) {
     const { name, value } = e.target;
 
     this.setState({ [name]: value });
   }
 
-  handleUpdate(e) {
+  handleUpdateBtn(e) {
     const { id } = this.props;
     const { name, username, email } = this.state;
 
     if (!name || !name.trim()) return;
 
-    this.props.updateItem(e, { id, name, username, email });
+    this.props.updateUser(e, { id, name, username, email });
   }
 
-  handleCancel(e) {
+  handleCancelBtn(e) {
     const nullId = null;
-    this.props.editItem(e, nullId);
+    this.props.editUser(e, nullId);
   }
 
   render() {
@@ -41,7 +41,7 @@ export default class EditRow extends React.Component {
         <td>{this.props.id}</td>
         <td>
           <input
-            onChange={this.handleChange}
+            onChange={this.handleChangeInput}
             type="text"
             value={name}
             name="name"
@@ -51,7 +51,7 @@ export default class EditRow extends React.Component {
         </td>
         <td>
           <textarea
-            onChange={this.handleChange}
+            onChange={this.handleChangeInput}
             value={username}
             name="username"
             placeholder="Enter username"
@@ -61,25 +61,25 @@ export default class EditRow extends React.Component {
         </td>
         <td>
           <input
-            onChange={this.handleChange}
+            onChange={this.handleChangeInput}
             type="email"
             value={email}
             name="email"
-            placeholder="0"
+            placeholder="Email"
             className="form-control"
           />
         </td>
         <td className="btn-group">
           <button
             type="button"
-            onClick={this.handleUpdate}
+            onClick={this.handleUpdateBtn}
             className="btn btn-primary "
           >
             Update
           </button>
           <button
             type="button"
-            onClick={this.handleCancel}
+            onClick={this.handleCancelBtn}
             className="btn btn-danger"
           >
             Cancel

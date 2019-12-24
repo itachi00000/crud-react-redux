@@ -10,17 +10,17 @@ function TableBodyRows({
   name,
   username,
   email,
-  delItem,
-  editItem,
-  addItem,
-  updateItem
+  delUser,
+  editUser,
+  addUser,
+  updateUser
 }) {
   if (editing && id === currentId) {
     return (
       <EditRow
-        addItem={addItem}
-        editItem={editItem}
-        updateItem={updateItem}
+        addUser={addUser}
+        editUser={editUser}
+        updateUser={updateUser}
         currentId={currentId}
         id={id}
         name={name}
@@ -35,7 +35,7 @@ function TableBodyRows({
       <td>{name}</td>
       <td>{username || '-'}</td>
       <td>{email || '-'}</td>
-      <TableActionBtns id={id} editItem={editItem} delItem={delItem} />
+      <TableActionBtns id={id} editUser={editUser} delUser={delUser} />
     </tr>
   );
 }

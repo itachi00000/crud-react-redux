@@ -19,12 +19,12 @@ export default class AddRow extends React.Component {
   }
 
   handleClick(e) {
-    const { nextId, addItem } = this.props;
+    const { nextId, addUser } = this.props;
     const { name, username, email } = this.state;
 
     if (!name.trim() || !name) return;
 
-    addItem(e, { name, username, email, nextId });
+    addUser(e, { name, username, email, nextId });
     this.setState({
       name: '',
       username: '',
@@ -75,7 +75,7 @@ export default class AddRow extends React.Component {
             onClick={this.handleClick}
             className="btn btn-success btn-block"
           >
-            Add Item
+            Add User
           </button>
         </td>
       </tr>

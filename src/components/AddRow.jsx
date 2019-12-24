@@ -22,8 +22,6 @@ export default class AddRow extends React.Component {
     const { nextId, addUser } = this.props;
     const { name, username, email } = this.state;
 
-    if (!name.trim() || !name) return;
-
     addUser(e, { name, username, email, nextId });
     this.setState({
       name: '',

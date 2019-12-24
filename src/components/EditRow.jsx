@@ -24,8 +24,6 @@ export default class EditRow extends React.Component {
     const { id } = this.props;
     const { name, username, email } = this.state;
 
-    if (!name || !name.trim()) return;
-
     this.props.updateUser(e, { id, name, username, email });
   }
 

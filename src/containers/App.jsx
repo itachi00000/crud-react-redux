@@ -87,6 +87,15 @@ class App extends React.Component {
   }
 
   onUpdateUser(e, { id, name, username, email }) {
+    if (!name.trim() || !name) {
+      this.setState(prevState => {
+        return {
+          alerts: { ...prevState, isEmpty: true, alertMsg: 'Enter Text' }
+        };
+      });
+      return;
+    }
+
     // updating the data (users)
     this.setState(prevState => {
       const updatedUsers = prevState.users.map(user => {
@@ -96,7 +105,10 @@ class App extends React.Component {
         }
         return user;
       });
-      return { users: updatedUsers };
+      return {
+        users: updatedUsers,
+        alerts: { ...prevState, isEmpty: false, alertMsg: 'Enter Text' }
+      };
     });
 
     // reset the status to default
@@ -104,6 +116,15 @@ class App extends React.Component {
   }
 
   onAddUser(e, { name, username, email, nextId }) {
+    if (!name.trim() || !name) {
+      this.setState(prevState => {
+        return {
+          alerts: { ...prevState, isEmpty: true, alertMsg: 'Enter Text' }
+        };
+      });
+      return;
+    }
+
     const newUser = {
       key: uuid.v4(),
       id: nextId,
@@ -111,8 +132,12 @@ class App extends React.Component {
       username,
       email
     };
+
     this.setState(prevState => {
-      return { users: [...prevState.users, newUser] };
+      return {
+        users: [...prevState.users, newUser],
+        alerts: { ...prevState, isEmpty: false, alertMsg: 'Enter Text' }
+      };
     });
   }
 
@@ -123,7 +148,7 @@ class App extends React.Component {
       status: { isEditing, currentId },
       alerts
     } = this.state;
-    console.log(alerts);
+
     const filteredUsers = users.filter(user => {
       return user.name.toLowerCase().includes(searchfield.toLowerCase().trim());
     });

@@ -1,11 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Button from './Button';
 
 function TableActionBtns({ delUser, editUser, id }) {
   return (
     <td>
       <div className="btn-group">
-        <Button className="btn-sm btn-info" label="Read" />
+        <Link to={`/read/${id}`}>
+          <Button className="btn btn-sm btn-info">Read</Button>
+        </Link>
+
         <button
           onClick={e => editUser(e, id)}
           type="button"

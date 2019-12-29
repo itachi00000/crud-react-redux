@@ -1,18 +1,22 @@
 import React from 'react';
+import Proptypes from 'prop-types';
 
-function SearchField({ searchChange }) {
+export default function SearchField({ searchChange, placeholder }) {
   return (
-    <form>
-      <div className="form-group">
-        <input
-          type="search"
-          className="form-control w-75"
-          placeholder="Search..."
-          onChange={searchChange}
-        />
-      </div>
-    </form>
+    <input
+      type="search"
+      className="form-control w-75"
+      placeholder={placeholder}
+      onChange={searchChange}
+    />
   );
 }
 
-export default SearchField;
+SearchField.propTypes = {
+  searchChange: Proptypes.func.isRequired,
+  placeholder: Proptypes.string
+};
+
+SearchField.defaultProps = {
+  placeholder: 'Search...'
+};

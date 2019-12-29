@@ -25,5 +25,7 @@ yarn-error.log*
 
 # My
 TODOS.txt
+.prettierrc
 /src/users.json
 /src/products.js
+/src/Test.jsx

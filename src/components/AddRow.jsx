@@ -1,4 +1,5 @@
 import React from 'react';
+// import InputField from './InputField';
 
 export default class AddRow extends React.Component {
   constructor() {
@@ -10,6 +11,7 @@ export default class AddRow extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
@@ -19,16 +21,34 @@ export default class AddRow extends React.Component {
   }
 
   handleClick(e) {
+    e.preventDefault();
     const { nextId, addUser } = this.props;
     const { name, username, email } = this.state;
 
     addUser(e, { name, username, email, nextId });
+
+    // reset this.state, after clicked
     this.setState({
       name: '',
       username: '',
       email: ''
     });
   }
+
+  // handleSubmit(e) {
+  //   e.preventDefault();
+  //   const { nextId, addUser } = this.props;
+  //   const { name, username, email } = this.state;
+
+  //   addUser(e, { name, username, email, nextId });
+  //   console.log(e);
+  //   // reset this.state, after clicked
+  //   this.setState({
+  //     name: '',
+  //     username: '',
+  //     email: ''
+  //   });
+  // }
 
   render() {
     const { nextId } = this.props;
@@ -66,6 +86,13 @@ export default class AddRow extends React.Component {
             placeholder="enter email"
             className="form-control"
           />
+          {/* <InputField
+            onChange={this.handleChange}
+            type="email"
+            value={email}
+            name="email"
+            placeholder="enter email"
+          /> */}
         </td>
         <td>
           <button

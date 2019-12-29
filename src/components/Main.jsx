@@ -1,12 +1,12 @@
 import React from 'react';
 import uuid from 'uuid';
-// import './App.css';
-// import userData from '../users.json';
-import Header from '../components/Header';
-import Table from '../components/Table';
-// import Scroll from '../components/Scroll';
 
-class App extends React.Component {
+import userData from '../users.json';
+import Table from './Table';
+
+// import Lifecycles from './components/lifecycles';
+
+class Main extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -17,7 +17,8 @@ class App extends React.Component {
         isError: false,
         alertMsg: ''
       },
-      users: [],
+      users: userData,
+      // users: [],
       searchfield: ''
     };
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -152,10 +153,9 @@ class App extends React.Component {
     const filteredUsers = users.filter(user => {
       return user.name.toLowerCase().includes(searchfield.toLowerCase().trim());
     });
-
+    console.log('warning');
     return (
-      <div>
-        <Header />
+      <main>
         <Table
           users={filteredUsers}
           alerts={alerts}
@@ -167,10 +167,11 @@ class App extends React.Component {
           editing={isEditing}
           currentId={currentId}
         />
+        {/* <Lifecycles /> */}
         <div style={{ height: '300px' }} />
-      </div>
+      </main>
     );
   }
 }
 
-export default App;
+export default Main;

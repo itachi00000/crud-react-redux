@@ -27,7 +27,7 @@ function Table({
         <div className="card-header text-white bg-info clearfix">
           <div className="row">
             <div className="col">
-              <h3>Product Table</h3>
+              <h3>Users Table</h3>
             </div>
             <div className="col">
               <SearchField searchChange={searchChange} />

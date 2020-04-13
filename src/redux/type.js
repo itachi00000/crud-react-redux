@@ -1,6 +1,7 @@
 const ActionTypes = {
-  DEL_ITEM: 'DEL_ITEM',
-  ADD_ITEM: 'ADD_ITEM'
+  DEL_USER: 'DEL_USER',
+  ADD_USER: 'ADD_USER',
+  SEARCH_USER: 'SEARCH_USER'
 };
 
 export default ActionTypes;

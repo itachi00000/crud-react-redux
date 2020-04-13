@@ -1,16 +1,24 @@
 import ActionTypes from './type';
 
-const { DEL_ITEM, ADD_ITEM } = ActionTypes;
+const { DEL_USER, ADD_USER, SEARCH_USER } = ActionTypes;
 
-export function deleteItem(id) {
+export function deleteUser(id) {
   return {
-    type: DEL_ITEM,
+    type: DEL_USER,
     payload: id
   };
 }
-export function addItem(item) {
+
+export function addUser(user) {
   return {
-    type: ADD_ITEM,
-    payload: item
+    type: ADD_USER,
+    payload: user
+  };
+}
+
+export function searchUser(query) {
+  return {
+    type: SEARCH_USER,
+    payload: query
   };
 }

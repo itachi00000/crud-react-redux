@@ -1,19 +1,35 @@
 import ActionTypes from './type';
 
-const { DEL_ITEM, ADD_ITEM } = ActionTypes;
+const { DEL_USER, ADD_USER, SEARCH_USER } = ActionTypes;
 
-const initState = {
-  items: []
+const inititalSearch = {
+  text: ''
 };
 
-export default function itemReducer(state = initState, action = {}) {
+const inititalItem = {
+  users: []
+};
+
+export default function itemReducer(state = inititalItem, action = {}) {
   switch (action.type) {
-    case ADD_ITEM:
-      return { ...state, items: [...state.items, action.payload] };
-    case DEL_ITEM:
+    case ADD_USER:
+      return { ...state, items: [...state.users, action.payload] };
+    case DEL_USER:
       return {
         ...state,
-        items: state.items.filter(item => item.id !== action.payload)
+        items: state.users.filter(user => user.id !== action.payload)
+      };
+    default:
+      return state;
+  }
+}
+
+export function searchReducer(state = inititalSearch, action = {}) {
+  switch (action.type) {
+    case SEARCH_USER:
+      return {
+        ...state,
+        text: action.payload
       };
     default:
       return state;

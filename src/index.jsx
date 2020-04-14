@@ -10,7 +10,6 @@ import * as serviceWorker from './serviceWorker';
 
 import store from './redux/store';
 
-console.log(store.getState());
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>

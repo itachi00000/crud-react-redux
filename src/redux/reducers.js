@@ -3,7 +3,7 @@ import ActionTypes from './types';
 const { DEL_USER, ADD_USER, SEARCH_USER } = ActionTypes;
 
 const inititalSearch = {
-  text: ''
+  inputValue: ''
 };
 
 const inititalUser = {
@@ -29,7 +29,7 @@ export function searchReducer(state = inititalSearch, action = {}) {
     case SEARCH_USER:
       return {
         ...state,
-        text: action.payload
+        inputValue: action.payload
       };
     default:
       return state;

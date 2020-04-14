@@ -1,10 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import uuid from 'uuid';
 
 import userData from '../users.json';
 import Table from './Table';
 
-// import Lifecycles from './components/lifecycles';
+// redux action
+import { searchUser } from '../redux/actions';
+
+const mapStateToProps = state => {
+  return { inputValueRx: state.searchReducer.inputValue };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    searchUserRx: query => dispatch(searchUser(query))
+  };
+};
 
 class Main extends React.Component {
   constructor() {
@@ -17,9 +29,9 @@ class Main extends React.Component {
         isError: false,
         alertMsg: ''
       },
-      users: userData,
+      users: userData
       // users: [],
-      searchfield: ''
+      // searchfield: ''
     };
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onDelUser = this.onDelUser.bind(this);
@@ -63,7 +75,8 @@ class Main extends React.Component {
   }
 
   onSearchChange(e) {
-    this.setState({ searchfield: e.target.value });
+    // this.setState({ searchfield: e.target.value });
+    this.props.searchUserRx(e.target.value);
   }
 
   onDelUser(e, id) {
@@ -150,8 +163,12 @@ class Main extends React.Component {
       alerts
     } = this.state;
 
+    const { inputValueRx } = this.props;
+
     const filteredUsers = users.filter(user => {
-      return user.name.toLowerCase().includes(searchfield.toLowerCase().trim());
+      return user.name
+        .toLowerCase()
+        .includes(inputValueRx.toLowerCase().trim());
     });
     console.log('warning');
     return (
@@ -174,4 +191,4 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

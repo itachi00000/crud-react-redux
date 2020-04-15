@@ -1,23 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import uuid from 'uuid';
+import axios from 'axios';
 
-import userData from '../users.json';
+// import userData from '../users.json';
 import Table from './Table';
 
 // redux action
-import { searchUser } from '../redux/actions';
+import {
+  searchUser,
+  deleteUser,
+  addUser,
+  updateUser,
+  getUsers
+} from '../redux/actions';
 
-const mapStateToProps = state => {
-  return { inputValueRx: state.searchReducer.inputValue };
-};
-
+// redux dispatch actions
 const mapDispatchToProps = dispatch => {
   return {
+    getUsersRx: arr => dispatch(getUsers(arr)),
+    addUserRx: user => dispatch(addUser(user)),
+    deleteUserRx: id => dispatch(deleteUser(id)),
+    updateUserRx: id => dispatch(updateUser(id)),
     searchUserRx: query => dispatch(searchUser(query))
   };
 };
 
+// redux states
+const mapStateToProps = state => {
+  return {
+    inputValueRx: state.searchReducer.inputValue,
+    usersRx: state.userReducer.users
+  };
+};
+
+// Main Comp
 class Main extends React.Component {
   constructor() {
     super();
@@ -28,10 +44,7 @@ class Main extends React.Component {
         isEmpty: false,
         isError: false,
         alertMsg: ''
-      },
-      users: userData
-      // users: [],
-      // searchfield: ''
+      }
     };
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onDelUser = this.onDelUser.bind(this);
@@ -46,20 +59,21 @@ class Main extends React.Component {
         alerts: { ...prevState.alerts, isLoading: true, alertMsg: 'Loading...' }
       };
     });
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(userData =>
+
+    axios
+      .get('http://localhost:5000/robots')
+      .then(res => {
+        this.props.getUsersRx(res.data);
         this.setState(prevState => {
           return {
-            users: userData,
             alerts: {
               ...prevState.alerts,
-              isLoading: false,
-              alertMsg: ''
+              isLoading: true,
+              alertMsg: 'Success!!'
             }
           };
-        })
-      )
+        });
+      })
       .catch(error =>
         this.setState(prevState => {
           return {
@@ -72,10 +86,22 @@ class Main extends React.Component {
           };
         })
       );
+
+    setTimeout(() => {
+      this.setState(prevState => {
+        return {
+          alerts: {
+            ...prevState.alerts,
+            isError: false,
+            isLoading: false,
+            alertMsg: ''
+          }
+        };
+      });
+    }, 1500);
   }
 
   onSearchChange(e) {
-    // this.setState({ searchfield: e.target.value });
     this.props.searchUserRx(e.target.value);
   }
 
@@ -83,9 +109,7 @@ class Main extends React.Component {
     // on editing mode, you cant click delete btn
     if (this.state.status.isEditing) return;
 
-    this.setState(prevState => {
-      return { users: prevState.users.filter(user => user.id !== id) };
-    });
+    this.props.deleteUserRx(id);
   }
 
   onEditUser(e, id) {
@@ -101,10 +125,10 @@ class Main extends React.Component {
   }
 
   onUpdateUser(e, { id, name, username, email }) {
-    if (!name.trim() || !name) {
+    if (!name || !username || !email) {
       this.setState(prevState => {
         return {
-          alerts: { ...prevState, isEmpty: true, alertMsg: 'Enter Text' }
+          alerts: { ...prevState.alerts, isEmpty: true, alertMsg: 'Enter Text' }
         };
       });
       return;
@@ -130,7 +154,7 @@ class Main extends React.Component {
   }
 
   onAddUser(e, { name, username, email, nextId }) {
-    if (!name.trim() || !name) {
+    if (!name || !username || !email) {
       this.setState(prevState => {
         return {
           alerts: { ...prevState, isEmpty: true, alertMsg: 'Enter Text' }
@@ -139,38 +163,23 @@ class Main extends React.Component {
       return;
     }
 
-    const newUser = {
-      key: uuid.v4(),
-      id: nextId,
-      name,
-      username,
-      email
-    };
-
-    this.setState(prevState => {
-      return {
-        users: [...prevState.users, newUser],
-        alerts: { ...prevState, isEmpty: false, alertMsg: 'Enter Text' }
-      };
-    });
+    this.props.addUserRx({ id: nextId, name, username, email });
   }
 
   render() {
     const {
-      users,
-      searchfield,
       status: { isEditing, currentId },
       alerts
     } = this.state;
 
-    const { inputValueRx } = this.props;
+    const { inputValueRx, usersRx } = this.props;
 
-    const filteredUsers = users.filter(user => {
+    const filteredUsers = usersRx.filter(user => {
       return user.name
         .toLowerCase()
         .includes(inputValueRx.toLowerCase().trim());
     });
-    console.log('warning');
+
     return (
       <main>
         <Table

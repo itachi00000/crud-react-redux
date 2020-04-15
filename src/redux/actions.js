@@ -1,6 +1,20 @@
 import ActionTypes from './types';
 
-const { DEL_USER, ADD_USER, SEARCH_USER } = ActionTypes;
+const { DEL_USER, ADD_USER, UPD_USER, SEARCH_USER, GET_USERS } = ActionTypes;
+
+export function getUsers(arr) {
+  return {
+    type: GET_USERS,
+    payload: arr
+  };
+}
+
+export function addUser(user) {
+  return {
+    type: ADD_USER,
+    payload: user
+  };
+}
 
 export function deleteUser(id) {
   return {
@@ -9,10 +23,10 @@ export function deleteUser(id) {
   };
 }
 
-export function addUser(user) {
+export function updateUser(id) {
   return {
-    type: ADD_USER,
-    payload: user
+    type: UPD_USER,
+    payload: id
   };
 }
 

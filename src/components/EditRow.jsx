@@ -48,13 +48,13 @@ export default class EditRow extends React.Component {
           />
         </td>
         <td>
-          <textarea
+          <input
             onChange={this.handleChangeInput}
+            type="text"
             value={username}
             name="username"
             placeholder="Enter username"
             className="form-control"
-            rows="1"
           />
         </td>
         <td>

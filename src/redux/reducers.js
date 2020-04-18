@@ -26,7 +26,7 @@ export function userReducer(state = initialUser, action = {}) {
         users: state.users.filter(user => user.id !== action.payload)
       };
     case UPD_USER:
-      return { ...state, users: [...state.users, action.payload] };
+      return { ...state, users: action.payload };
     default:
       return state;
   }

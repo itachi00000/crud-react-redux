@@ -135,19 +135,17 @@ class Main extends React.Component {
     }
 
     // updating the data (users)
-    this.setState(prevState => {
-      const updatedUsers = prevState.users.map(user => {
-        if (user.id === id) {
-          // eslint-disable-next-line no-param-reassign
-          user = { id, name, username, email };
-        }
-        return user;
-      });
-      return {
-        users: updatedUsers,
-        alerts: { ...prevState, isEmpty: false, alertMsg: 'Enter Text' }
-      };
+
+    const updatedUsers = this.props.usersRx.map(user => {
+      let newUser = null;
+      if (user.id === id) {
+        // eslint-disable-next-line no-param-reassign
+        newUser = { id, name, username, email };
+      }
+      return newUser || user;
     });
+    // update redux
+    this.props.updateUserRx(updatedUsers);
 
     // reset the status to default
     this.setState({ status: { isEditing: false, currentId: null } });

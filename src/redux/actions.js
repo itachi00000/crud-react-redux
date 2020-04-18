@@ -23,10 +23,10 @@ export function deleteUser(id) {
   };
 }
 
-export function updateUser(id) {
+export function updateUser(users) {
   return {
     type: UPD_USER,
-    payload: id
+    payload: users
   };
 }
 

@@ -27,5 +27,3 @@ yarn-error.log*
 TODOS.txt
 .prettierrc
 /src/users.json
-/src/products.js
-/src/Test.jsx

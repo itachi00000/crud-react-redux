@@ -1,5 +1,5 @@
 {
-  "name": "crud-react",
+  "name": "crud-react-redux",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

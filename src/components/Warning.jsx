@@ -1,11 +1,12 @@
 import React from 'react';
 
-export default function Warning({ alerts }) {
+export default function Warning({ isLoading, isError, msg }) {
   return (
-    <h4 className="alert alert-danger text-center mb-0">
-      {alerts.isLoading && alerts.alertMsg}
-      {alerts.isError && alerts.alertMsg}
-      {alerts.isEmpty && alerts.alertMsg}
+    <h4
+      className={`alert ${(isLoading || isError) &&
+        'alert-danger'} alert-success  text-center mb-0`}
+    >
+      {(isError || isLoading || msg) && msg}
     </h4>
   );
 }

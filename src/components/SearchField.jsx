@@ -4,7 +4,7 @@ import Proptypes from 'prop-types';
 
 const mapStateToProps = state => {
   return {
-    inputValueRx: state.searchReducer.inputValue
+    inputValueRx: state.userReducer.inputValue
   };
 };
 

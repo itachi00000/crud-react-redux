@@ -9,18 +9,20 @@ import Back from './components/Back';
 import ReadPage from './pages/ReadPage';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
-// import Lifecycles from './components/lifecycles';
+import ErrorBoundary from './components/ErrorBoundary';
 
 export default function App() {
   return (
     <>
       <Header />
       <Route exact path="/read/:id" component={Back} />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/read/:id" component={ReadPage} />
-        <Route component={ErrorPage} />
-      </Switch>
+      <ErrorBoundary>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/read/:id" component={ReadPage} />
+          <Route component={ErrorPage} />
+        </Switch>
+      </ErrorBoundary>
     </>
   );
 }

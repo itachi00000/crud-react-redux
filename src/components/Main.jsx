@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 // import userData from '../users.json';
 import Table from './Table';
@@ -11,7 +10,8 @@ import {
   deleteUser,
   addUser,
   updateUser,
-  getUsers
+  getUsers,
+  fetchDatas
 } from '../redux/actions';
 
 // redux dispatch actions
@@ -21,15 +21,19 @@ const mapDispatchToProps = dispatch => {
     addUserRx: user => dispatch(addUser(user)),
     deleteUserRx: id => dispatch(deleteUser(id)),
     updateUserRx: id => dispatch(updateUser(id)),
-    searchUserRx: query => dispatch(searchUser(query))
+    searchUserRx: query => dispatch(searchUser(query)),
+    fetchDatasRx: () => dispatch(fetchDatas())
   };
 };
 
 // redux states
 const mapStateToProps = state => {
   return {
-    inputValueRx: state.searchReducer.inputValue,
-    usersRx: state.userReducer.users
+    inputValueRx: state.userReducer.inputValue,
+    usersRx: state.userReducer.users,
+    isLoadingRx: state.userReducer.isLoading,
+    isErrorRx: state.userReducer.isError,
+    msgRx: state.userReducer.msg
   };
 };
 
@@ -54,51 +58,53 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    this.setState(prevState => {
-      return {
-        alerts: { ...prevState.alerts, isLoading: true, alertMsg: 'Loading...' }
-      };
-    });
+    // this.setState(prevState => {
+    //   return {
+    //     alerts: { ...prevState.alerts, isLoading: true, alertMsg: 'Loading...' }
+    //   };
+    // });
 
-    axios
-      .get('http://localhost:5000/robots')
-      .then(res => {
-        this.props.getUsersRx(res.data);
-        this.setState(prevState => {
-          return {
-            alerts: {
-              ...prevState.alerts,
-              isLoading: true,
-              alertMsg: 'Success!!'
-            }
-          };
-        });
-      })
-      .catch(error =>
-        this.setState(prevState => {
-          return {
-            alerts: {
-              ...prevState.alerts,
-              isError: true,
-              isLoading: false,
-              alertMsg: error.message
-            }
-          };
-        })
-      );
+    // return ALL List
+    this.props.fetchDatasRx();
+    // axios
+    //   .get('http://localhost:5000/robots')
+    //   .then(res => {
+    //     this.props.getUsersRx(res.data);
+    //     this.setState(prevState => {
+    //       return {
+    //         alerts: {
+    //           ...prevState.alerts,
+    //           isLoading: true,
+    //           alertMsg: 'Success!!'
+    //         }
+    //       };
+    //     });
+    //   })
+    //   .catch(error =>
+    //     this.setState(prevState => {
+    //       return {
+    //         alerts: {
+    //           ...prevState.alerts,
+    //           isError: true,
+    //           isLoading: false,
+    //           alertMsg: error.message
+    //         }
+    //       };
+    //     })
+    //   );
 
-    setTimeout(() => {
-      this.setState(prevState => {
-        return {
-          alerts: {
-            ...prevState.alerts,
-            isError: false,
-            isLoading: false,
-            alertMsg: ''
-          }
-        };
-      });
-    }, 1500);
+    // setTimeout(() => {
+    //   this.setState(prevState => {
+    //     return {
+    //       alerts: {
+    //         ...prevState.alerts,
+    //         isError: false,
+    //         isLoading: false,
+    //         alertMsg: ''
+    //       }
+    //     };
+    //   });
+    // }, 1500);
   }
 
   onSearchChange(e) {
@@ -170,7 +176,7 @@ class Main extends React.Component {
       alerts
     } = this.state;
 
-    const { inputValueRx, usersRx } = this.props;
+    const { inputValueRx, usersRx, ...otherProps } = this.props;
 
     const filteredUsers = usersRx.filter(user => {
       return user.name
@@ -181,8 +187,8 @@ class Main extends React.Component {
     return (
       <main>
         <Table
+          otherProps={otherProps}
           users={filteredUsers}
-          alerts={alerts}
           searchChange={this.onSearchChange}
           delUser={this.onDelUser}
           addUser={this.onAddUser}

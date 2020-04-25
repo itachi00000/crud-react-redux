@@ -7,7 +7,7 @@ import Warning from './Warning';
 
 function Table({
   users,
-  alerts,
+  otherProps: { isLoadingRx, isErrorRx, msgRx },
   searchChange,
   updateUser,
   delUser,
@@ -20,7 +20,9 @@ function Table({
   // which will be the id for 'newUser'
   // if there is no data item, set the 'nextId' to 1
   const nextId = users.length ? +users[users.length - 1].id + 1 : 1;
-  const hasAlert = alerts.isLoading || alerts.isEmpty || alerts.isError;
+  const hasAlert = isLoadingRx || isErrorRx || msgRx;
+
+  console.log('alerts', isLoadingRx, isErrorRx, msgRx);
   return (
     <div className="container">
       <div className="card mx-auto w-75">
@@ -34,7 +36,9 @@ function Table({
             </div>
           </div>
         </div>
-        {hasAlert && <Warning alerts={alerts} />}
+        {hasAlert && (
+          <Warning isLoading={isLoadingRx} isError={isErrorRx} msg={msgRx} />
+        )}
         <div className="card-body">
           <form>
             <table className="table table-striped">

@@ -1,4 +1,6 @@
 import axios from 'axios';
+
+import { getServerUrl } from '../server-url';
 import {
   DEL_USER,
   ADD_USER,
@@ -13,7 +15,9 @@ import {
   IS_ERROR
 } from './types';
 
-const URL = 'http://localhost:5000/api/robots';
+const SERVER_URL = getServerUrl();
+
+// const URL = 'http://localhost:5000/api/robots';
 
 export function loading(loadingMsg = 'Loading...') {
   return {
@@ -56,13 +60,13 @@ export function getUsers(users) {
   };
 }
 
-export const fetchUser = id => dispatch => {
+export const fetchUser = (id) => (dispatch) => {
   dispatch(loading());
   // fetch
   axios
-    .get(`${URL}/${id}`)
-    .then(res => dispatch(getUser(res.data)))
-    .catch(error => {
+    .get(`${SERVER_URL}/${id}`)
+    .then((res) => dispatch(getUser(res.data)))
+    .catch((error) => {
       console.error(error.message);
       dispatch(errorFetch(error.message));
     })
@@ -74,18 +78,18 @@ export const fetchUser = id => dispatch => {
     );
 };
 
-export const fetchAllUsers = () => dispatch => {
+export const fetchAllUsers = () => (dispatch) => {
   // async loading
   dispatch(loading());
 
   // fetch
   axios
-    .get(URL)
-    .then(res => {
+    .get(SERVER_URL)
+    .then((res) => {
       dispatch(getUsers(res.data));
       dispatch(successFetch('Success Fetch'));
     })
-    .catch(err => {
+    .catch((err) => {
       console.error('ERROR at fetchAllUsers::', err.message);
       dispatch(errorFetch(err.message));
     })

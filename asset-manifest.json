@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.de9d4c8d.chunk.css",
-    "main.js": "/static/js/main.ce1429d9.chunk.js",
-    "main.js.map": "/static/js/main.ce1429d9.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.62f5e097.js",
-    "runtime-main.js.map": "/static/js/runtime-main.62f5e097.js.map",
-    "static/js/2.9fffa4da.chunk.js": "/static/js/2.9fffa4da.chunk.js",
-    "static/js/2.9fffa4da.chunk.js.map": "/static/js/2.9fffa4da.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.d6f1e8541ead86b77deedae348b60d5e.js": "/precache-manifest.d6f1e8541ead86b77deedae348b60d5e.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.de9d4c8d.chunk.css.map": "/static/css/main.de9d4c8d.chunk.css.map",
-    "static/js/2.9fffa4da.chunk.js.LICENSE": "/static/js/2.9fffa4da.chunk.js.LICENSE"
+    "main.css": "/crud-react-redux/static/css/main.de9d4c8d.chunk.css",
+    "main.js": "/crud-react-redux/static/js/main.ce1429d9.chunk.js",
+    "main.js.map": "/crud-react-redux/static/js/main.ce1429d9.chunk.js.map",
+    "runtime-main.js": "/crud-react-redux/static/js/runtime-main.340badcd.js",
+    "runtime-main.js.map": "/crud-react-redux/static/js/runtime-main.340badcd.js.map",
+    "static/js/2.9fffa4da.chunk.js": "/crud-react-redux/static/js/2.9fffa4da.chunk.js",
+    "static/js/2.9fffa4da.chunk.js.map": "/crud-react-redux/static/js/2.9fffa4da.chunk.js.map",
+    "index.html": "/crud-react-redux/index.html",
+    "precache-manifest.b16e724c1a86b95a875136557be1cb30.js": "/crud-react-redux/precache-manifest.b16e724c1a86b95a875136557be1cb30.js",
+    "service-worker.js": "/crud-react-redux/service-worker.js",
+    "static/css/main.de9d4c8d.chunk.css.map": "/crud-react-redux/static/css/main.de9d4c8d.chunk.css.map",
+    "static/js/2.9fffa4da.chunk.js.LICENSE": "/crud-react-redux/static/js/2.9fffa4da.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.62f5e097.js",
+    "static/js/runtime-main.340badcd.js",
     "static/js/2.9fffa4da.chunk.js",
     "static/css/main.de9d4c8d.chunk.css",
     "static/js/main.ce1429d9.chunk.js"

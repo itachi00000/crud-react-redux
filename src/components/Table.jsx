@@ -23,8 +23,8 @@ function Table({
   const hasAlert = isLoadingRx || isErrorRx || msgRx;
 
   return (
-    <div className="container">
-      <div className="card mx-auto w-75">
+    <div className="container-fluid">
+      <div className="card mx-auto">
         <div className="card-header text-white bg-info clearfix">
           <div className="row">
             <div className="col">
@@ -52,7 +52,7 @@ function Table({
               </thead>
               <tbody>
                 {users.length > 0 ? (
-                  users.map(user => {
+                  users.map((user) => {
                     return (
                       <TableBodyRows
                         key={uuid.v4()}

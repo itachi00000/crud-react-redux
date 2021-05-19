@@ -27,6 +27,8 @@ const initialState = {
 
 // eslint-disable-next-line import/prefer-default-export
 export const userReducer = (state = initialState, action = {}) => {
+  const { type, payload } = action;
+
   switch (action.type) {
     case IS_LOADING:
       return { ...state, isLoading: true, msg: action.payload };
@@ -39,6 +41,7 @@ export const userReducer = (state = initialState, action = {}) => {
       };
     case IS_ERROR:
       return { ...state, isLoading: false, isError: true, msg: action.payload };
+
     case RESET:
       return {
         ...state,
@@ -65,7 +68,7 @@ export const userReducer = (state = initialState, action = {}) => {
     case DEL_USER:
       return {
         ...state,
-        users: state.users.filter(user => user.id !== action.payload)
+        users: state.users.filter((user) => user.id !== action.payload)
       };
     case IS_EDITING:
       return { ...state, isEditing: action.payload };

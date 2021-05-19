@@ -12,17 +12,17 @@ import {
 } from '../redux/actions';
 
 // redux dispatch actions
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    addUserRx: user => dispatch(addUser(user)),
-    deleteUserRx: id => dispatch(deleteUser(id)),
-    updateUserRx: id => dispatch(updateUser(id)),
+    addUserRx: (user) => dispatch(addUser(user)),
+    deleteUserRx: (id) => dispatch(deleteUser(id)),
+    updateUserRx: (id) => dispatch(updateUser(id)),
     fetchUsersRx: () => dispatch(fetchAllUsers())
   };
 };
 
 // redux states
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     inputValueRx: state.userReducer.inputValue,
     usersRx: state.userReducer.users,
@@ -63,7 +63,7 @@ class Main extends React.Component {
 
   onEditUser(e, id) {
     // toggles the 'isEditing'
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
         status: {
           isEditing: !prevState.status.isEditing,
@@ -75,7 +75,7 @@ class Main extends React.Component {
 
   onUpdateUser(e, { id, name, username, email }) {
     if (!name.trim() || !username.trim() || !email.trim()) {
-      this.setState(prevState => {
+      this.setState((prevState) => {
         return {
           alerts: { ...prevState.alerts, isEmpty: true, alertMsg: 'Enter Text' }
         };
@@ -85,7 +85,7 @@ class Main extends React.Component {
 
     // updating the data (users)
 
-    const updatedUsers = this.props.usersRx.map(user => {
+    const updatedUsers = this.props.usersRx.map((user) => {
       let newUser = null;
       if (user.id === id) {
         // eslint-disable-next-line no-param-reassign
@@ -93,6 +93,7 @@ class Main extends React.Component {
       }
       return newUser || user;
     });
+
     // update redux
     this.props.updateUserRx(updatedUsers);
 
@@ -102,7 +103,7 @@ class Main extends React.Component {
 
   onAddUser(e, { name, username, email, nextId }) {
     if (!name.trim() || !username.trim() || !email.trim()) {
-      this.setState(prevState => {
+      this.setState((prevState) => {
         return {
           alerts: { ...prevState, isEmpty: true, alertMsg: 'Enter Text' }
         };
@@ -120,7 +121,7 @@ class Main extends React.Component {
 
     const { inputValueRx, usersRx, ...otherProps } = this.props;
 
-    const filteredUsers = usersRx.filter(user => {
+    const filteredUsers = usersRx.filter((user) => {
       return user.name
         .toLowerCase()
         .includes(inputValueRx.toLowerCase().trim());

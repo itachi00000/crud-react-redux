@@ -1,28 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-// import userData from '../users.json';
 import Table from './Table';
 
 // redux action
 import {
-  searchUser,
   deleteUser,
   addUser,
   updateUser,
-  getUsers,
-  fetchDatas
+  fetchAllUsers
 } from '../redux/actions';
 
 // redux dispatch actions
 const mapDispatchToProps = dispatch => {
   return {
-    getUsersRx: arr => dispatch(getUsers(arr)),
     addUserRx: user => dispatch(addUser(user)),
     deleteUserRx: id => dispatch(deleteUser(id)),
     updateUserRx: id => dispatch(updateUser(id)),
-    searchUserRx: query => dispatch(searchUser(query)),
-    fetchDatasRx: () => dispatch(fetchDatas())
+    fetchUsersRx: () => dispatch(fetchAllUsers())
   };
 };
 
@@ -44,13 +39,10 @@ class Main extends React.Component {
     this.state = {
       status: { isEditing: false, currentId: null },
       alerts: {
-        isLoading: false,
         isEmpty: false,
-        isError: false,
         alertMsg: ''
       }
     };
-    this.onSearchChange = this.onSearchChange.bind(this);
     this.onDelUser = this.onDelUser.bind(this);
     this.onAddUser = this.onAddUser.bind(this);
     this.onEditUser = this.onEditUser.bind(this);
@@ -58,57 +50,8 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    // this.setState(prevState => {
-    //   return {
-    //     alerts: { ...prevState.alerts, isLoading: true, alertMsg: 'Loading...' }
-    //   };
-    // });
-
-    // return ALL List
-    this.props.fetchDatasRx();
-    // axios
-    //   .get('http://localhost:5000/robots')
-    //   .then(res => {
-    //     this.props.getUsersRx(res.data);
-    //     this.setState(prevState => {
-    //       return {
-    //         alerts: {
-    //           ...prevState.alerts,
-    //           isLoading: true,
-    //           alertMsg: 'Success!!'
-    //         }
-    //       };
-    //     });
-    //   })
-    //   .catch(error =>
-    //     this.setState(prevState => {
-    //       return {
-    //         alerts: {
-    //           ...prevState.alerts,
-    //           isError: true,
-    //           isLoading: false,
-    //           alertMsg: error.message
-    //         }
-    //       };
-    //     })
-    //   );
-
-    // setTimeout(() => {
-    //   this.setState(prevState => {
-    //     return {
-    //       alerts: {
-    //         ...prevState.alerts,
-    //         isError: false,
-    //         isLoading: false,
-    //         alertMsg: ''
-    //       }
-    //     };
-    //   });
-    // }, 1500);
-  }
-
-  onSearchChange(e) {
-    this.props.searchUserRx(e.target.value);
+    // return ALL Users
+    this.props.fetchUsersRx();
   }
 
   onDelUser(e, id) {
@@ -131,7 +74,7 @@ class Main extends React.Component {
   }
 
   onUpdateUser(e, { id, name, username, email }) {
-    if (!name || !username || !email) {
+    if (!name.trim() || !username.trim() || !email.trim()) {
       this.setState(prevState => {
         return {
           alerts: { ...prevState.alerts, isEmpty: true, alertMsg: 'Enter Text' }
@@ -158,7 +101,7 @@ class Main extends React.Component {
   }
 
   onAddUser(e, { name, username, email, nextId }) {
-    if (!name || !username || !email) {
+    if (!name.trim() || !username.trim() || !email.trim()) {
       this.setState(prevState => {
         return {
           alerts: { ...prevState, isEmpty: true, alertMsg: 'Enter Text' }
@@ -172,8 +115,7 @@ class Main extends React.Component {
 
   render() {
     const {
-      status: { isEditing, currentId },
-      alerts
+      status: { isEditing, currentId }
     } = this.state;
 
     const { inputValueRx, usersRx, ...otherProps } = this.props;
@@ -189,7 +131,6 @@ class Main extends React.Component {
         <Table
           otherProps={otherProps}
           users={filteredUsers}
-          searchChange={this.onSearchChange}
           delUser={this.onDelUser}
           addUser={this.onAddUser}
           editUser={this.onEditUser}
@@ -197,7 +138,7 @@ class Main extends React.Component {
           editing={isEditing}
           currentId={currentId}
         />
-        {/* <Lifecycles /> */}
+
         <div style={{ height: '300px' }} />
       </main>
     );

@@ -8,7 +8,6 @@ import Warning from './Warning';
 function Table({
   users,
   otherProps: { isLoadingRx, isErrorRx, msgRx },
-  searchChange,
   updateUser,
   delUser,
   addUser,
@@ -20,9 +19,9 @@ function Table({
   // which will be the id for 'newUser'
   // if there is no data item, set the 'nextId' to 1
   const nextId = users.length ? +users[users.length - 1].id + 1 : 1;
+  // checks for alerts or alert msg
   const hasAlert = isLoadingRx || isErrorRx || msgRx;
 
-  console.log('alerts', isLoadingRx, isErrorRx, msgRx);
   return (
     <div className="container">
       <div className="card mx-auto w-75">
@@ -32,7 +31,7 @@ function Table({
               <h3>Users Table</h3>
             </div>
             <div className="col">
-              <SearchField searchChange={searchChange} />
+              <SearchField />
             </div>
           </div>
         </div>

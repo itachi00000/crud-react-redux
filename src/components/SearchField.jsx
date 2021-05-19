@@ -1,32 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Proptypes from 'prop-types';
+// import Proptypes from 'prop-types';
 
+// action
+import { searchUser } from '../redux/actions';
+
+// redux state
 const mapStateToProps = state => {
   return {
     inputValueRx: state.userReducer.inputValue
   };
 };
 
-function SearchField({ searchChange, placeholder, inputValueRx }) {
+function SearchField(props) {
+  const { inputValueRx, dispatch } = props;
+
   return (
     <input
       type="search"
+      name="search"
       className="form-control w-75"
       value={inputValueRx}
-      placeholder={placeholder}
-      onChange={searchChange}
+      placeholder="Search..."
+      onChange={e => dispatch(searchUser(e.target.value))}
     />
   );
 }
-
-SearchField.propTypes = {
-  searchChange: Proptypes.func.isRequired,
-  placeholder: Proptypes.string
-};
-
-SearchField.defaultProps = {
-  placeholder: 'Search...'
-};
 
 export default connect(mapStateToProps)(SearchField);

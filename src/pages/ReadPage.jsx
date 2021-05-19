@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // action
-import { fetchData } from '../redux/actions';
+import { fetchUser } from '../redux/actions';
 
 // redux - dispatch
 const mapDispatchToProps = dispatch => {
   return {
-    fetchDataRx: url => dispatch(fetchData(url))
+    fetchUserRx: url => dispatch(fetchUser(url))
   };
 };
 
@@ -24,7 +24,7 @@ const mapStateToProps = state => {
 
 // comp
 function ReadPage({
-  fetchDataRx,
+  fetchUserRx,
   currentUserRx,
   isErrorRx,
   isLoadingRx,
@@ -34,18 +34,18 @@ function ReadPage({
   const paramsId = Number(match.params.id);
 
   useEffect(() => {
-    fetchDataRx(paramsId);
-  }, [fetchDataRx, paramsId]);
+    fetchUserRx(paramsId);
+  }, [fetchUserRx, paramsId]);
 
   if (isErrorRx) {
     return <div className="container">{errorMsgRx}</div>;
   }
 
-  if (isLoadingRx) {
+  if (isLoadingRx || !currentUserRx) {
     return <div className="container">Loading...</div>;
   }
 
-  const { id, name, username, email } = currentUserRx;
+  const { id, name, username, email } = currentUserRx; // error when currentUser is null
 
   return (
     <div className="container text-center">

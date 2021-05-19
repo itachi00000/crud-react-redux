@@ -11,8 +11,8 @@ const middlewares = [thunk];
 
 // use logger in developement
 if (process.env.NODE_ENV === 'development') {
-  const logger = createLogger(); // logger is last
-  middlewares.push(logger);
+  const logger = createLogger();
+  middlewares.push(logger); // logger is last,, [..., logger]
 }
 
 // rootReducer and store

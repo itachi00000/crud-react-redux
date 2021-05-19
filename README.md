@@ -1,4 +1,4 @@
-# Practice: Create CRUD using React
+# Practice: Create CRUD using React w/ redux redux
 
 Not yet finished.
 

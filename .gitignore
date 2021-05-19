@@ -25,5 +25,5 @@ yarn-error.log*
 
 # My
 TODOS.txt
-.prettierrc
+.eslintrc.json
 /src/users.json

@@ -6,25 +6,39 @@ import {
   SEARCH_USER,
   GET_USERS,
   GET_USER,
+  RESET,
+  IS_EDITING,
   IS_LOADING,
   IS_SUCCESS,
   IS_ERROR
 } from './types';
 
-export function isLoading() {
+const URL = 'http://localhost:5000/api/robots';
+
+export function loading(loadingMsg = 'Loading...') {
   return {
-    type: IS_LOADING
+    type: IS_LOADING,
+    payload: loadingMsg
   };
 }
 
-export function isSuccess(response) {
-  return { type: IS_SUCCESS, payload: response };
+export function resetAlerts() {
+  return {
+    type: RESET
+  };
 }
 
-export function isError(errorMsg) {
+export function errorFetch(errorMsg = 'default Error Msg') {
   return {
     type: IS_ERROR,
     payload: errorMsg
+  };
+}
+
+export function successFetch(successMsg = 'default Success Msg') {
+  return {
+    type: IS_SUCCESS,
+    payload: successMsg
   };
 }
 
@@ -42,34 +56,46 @@ export function getUsers(users) {
   };
 }
 
-export function fetchData(paramsId) {
-  return dispatch => {
-    dispatch(isLoading());
-    return axios
-      .get(`http://localhost:5000/robots/${paramsId}`)
-      .then(res => dispatch(getUser(res.data)))
-      .catch(err => {
-        console.log('ERROR at fetchData::', err.message);
-        dispatch(isError(err.message));
-      });
-  };
-}
+export const fetchUser = id => dispatch => {
+  dispatch(loading());
+  // fetch
+  axios
+    .get(`${URL}/${id}`)
+    .then(res => dispatch(getUser(res.data)))
+    .catch(error => {
+      console.error(error.message);
+      dispatch(errorFetch(error.message));
+    })
+    .finally(() =>
+      // reset alertMsg
+      setTimeout(() => {
+        dispatch(resetAlerts());
+      }, 1500)
+    );
+};
 
-export function fetchDatas() {
-  // dispatch an async action
-  return dispatch => {
-    // loading
-    dispatch(isLoading());
+export const fetchAllUsers = () => dispatch => {
+  // async loading
+  dispatch(loading());
 
-    // fetch
-    axios
-      .get(`http://localhost:5000/robots`)
-      .then(res => dispatch(getUsers(res.data)))
-      .catch(err => {
-        dispatch(isError(err.message));
-      });
-  };
-}
+  // fetch
+  axios
+    .get(URL)
+    .then(res => {
+      dispatch(getUsers(res.data));
+      dispatch(successFetch('Success Fetch'));
+    })
+    .catch(err => {
+      console.error('ERROR at fetchAllUsers::', err.message);
+      dispatch(errorFetch(err.message));
+    })
+    .finally(() =>
+      // reset alertMsg
+      setTimeout(() => {
+        dispatch(resetAlerts());
+      }, 1500)
+    );
+};
 
 // CRUD + search
 
@@ -87,10 +113,17 @@ export function deleteUser(id) {
   };
 }
 
-export function updateUser(users) {
+export function updateUser(user) {
   return {
     type: UPD_USER,
-    payload: users
+    payload: user
+  };
+}
+
+export function editing(bool = true) {
+  return {
+    type: IS_EDITING,
+    payload: bool
   };
 }
 

@@ -7,7 +7,9 @@ import {
   GET_USER,
   IS_LOADING,
   IS_SUCCESS,
-  IS_ERROR
+  IS_ERROR,
+  RESET,
+  IS_EDITING
 } from './types';
 
 // import userData from '../users.json';
@@ -15,10 +17,11 @@ import {
 const initialState = {
   inputValue: '',
   users: [],
-  currentUser: {}, // null (cause error) or {}
-  isError: false,
+  currentUser: null, // null (cause error) or {}, [upd] null is easy to handle error
+  isEditing: false,
   isLoading: false,
   isSuccess: false,
+  isError: false,
   msg: ''
 };
 
@@ -26,33 +29,36 @@ const initialState = {
 export const userReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case IS_LOADING:
-      return { ...state, isLoading: true, msg: 'Loader redux' };
+      return { ...state, isLoading: true, msg: action.payload };
     case IS_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        isError: false,
         isSuccess: true,
-        msg: 'Fetch Success'
+        msg: action.payload
       };
     case IS_ERROR:
       return { ...state, isLoading: false, isError: true, msg: action.payload };
+    case RESET:
+      return {
+        ...state,
+        msg: '',
+        isError: false,
+        isLoading: false,
+        isSuccess: false
+      };
     case GET_USER:
       return {
         ...state,
         users: initialState.users,
-        currentUser: action.payload,
-        isLoading: false,
-        isError: false
+        currentUser: action.payload
       };
+
     case GET_USERS:
       return {
         ...state,
         currentUser: initialState.currentUser,
-        users: action.payload,
-        isError: false,
-        isLoading: false,
-        msg: 'Fetch Success'
+        users: action.payload
       };
     case ADD_USER:
       return { ...state, users: [...state.users, action.payload] };
@@ -61,8 +67,10 @@ export const userReducer = (state = initialState, action = {}) => {
         ...state,
         users: state.users.filter(user => user.id !== action.payload)
       };
+    case IS_EDITING:
+      return { ...state, isEditing: action.payload };
     case UPD_USER:
-      return { ...state, users: action.payload };
+      return { ...state, users: action.payload, isEditing: false };
     case SEARCH_USER:
       return {
         ...state,

@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/crud-react-redux/static/css/main.de9d4c8d.chunk.css",
-    "main.js": "/crud-react-redux/static/js/main.ce1429d9.chunk.js",
-    "main.js.map": "/crud-react-redux/static/js/main.ce1429d9.chunk.js.map",
+    "main.js": "/crud-react-redux/static/js/main.3e39ff0f.chunk.js",
+    "main.js.map": "/crud-react-redux/static/js/main.3e39ff0f.chunk.js.map",
     "runtime-main.js": "/crud-react-redux/static/js/runtime-main.340badcd.js",
     "runtime-main.js.map": "/crud-react-redux/static/js/runtime-main.340badcd.js.map",
-    "static/js/2.9fffa4da.chunk.js": "/crud-react-redux/static/js/2.9fffa4da.chunk.js",
-    "static/js/2.9fffa4da.chunk.js.map": "/crud-react-redux/static/js/2.9fffa4da.chunk.js.map",
+    "static/js/2.a07ad9e2.chunk.js": "/crud-react-redux/static/js/2.a07ad9e2.chunk.js",
+    "static/js/2.a07ad9e2.chunk.js.map": "/crud-react-redux/static/js/2.a07ad9e2.chunk.js.map",
     "index.html": "/crud-react-redux/index.html",
-    "precache-manifest.b16e724c1a86b95a875136557be1cb30.js": "/crud-react-redux/precache-manifest.b16e724c1a86b95a875136557be1cb30.js",
+    "precache-manifest.6bfed1d75f1f0f31dbe2fb9f84a98e32.js": "/crud-react-redux/precache-manifest.6bfed1d75f1f0f31dbe2fb9f84a98e32.js",
     "service-worker.js": "/crud-react-redux/service-worker.js",
     "static/css/main.de9d4c8d.chunk.css.map": "/crud-react-redux/static/css/main.de9d4c8d.chunk.css.map",
-    "static/js/2.9fffa4da.chunk.js.LICENSE": "/crud-react-redux/static/js/2.9fffa4da.chunk.js.LICENSE"
+    "static/js/2.a07ad9e2.chunk.js.LICENSE": "/crud-react-redux/static/js/2.a07ad9e2.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.340badcd.js",
-    "static/js/2.9fffa4da.chunk.js",
+    "static/js/2.a07ad9e2.chunk.js",
     "static/css/main.de9d4c8d.chunk.css",
-    "static/js/main.ce1429d9.chunk.js"
+    "static/js/main.3e39ff0f.chunk.js"
   ]
 }

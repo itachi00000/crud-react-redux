@@ -220,14 +220,6 @@ export const fetchUpdateUser = (updUser, id) => (dispatch, getState) => {
 
 // CRUD + search
 
-// user {}
-// export function addUser(user) {
-//   return {
-//     type: ADD_USER,
-//     payload: user
-//   };
-// }
-
 export function searchUser(query) {
   return {
     type: SEARCH_USER,

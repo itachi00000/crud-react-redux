@@ -46,6 +46,8 @@ export function successFetch(successMsg = 'default Success Msg') {
   };
 }
 
+// ------- methods
+
 export function getUser(user) {
   return {
     type: GET_USER,
@@ -101,14 +103,32 @@ export const fetchAllUsers = () => (dispatch) => {
     );
 };
 
-// CRUD + search
-
+// non-export
 export function addUser(user) {
   return {
     type: ADD_USER,
     payload: user
   };
 }
+
+export const fetchAddUser = (user) => (dispatch) => {
+  // async loading? on add?
+  dispatch(loading());
+
+  axios
+    .post(`${SERVER_URL}`, user)
+    .then((resp) => dispatch(addUser(resp.data)))
+    .catch((error) => {
+      console.error(error.message);
+      dispatch(errorFetch(error.message));
+    })
+    .finally(() =>
+      // reset alertMsg
+      setTimeout(() => {
+        dispatch(resetAlerts());
+      }, 1500)
+    );
+};
 
 export function deleteUser(id) {
   return {
@@ -117,10 +137,30 @@ export function deleteUser(id) {
   };
 }
 
-export function updateUser(user) {
+export const fetchDeleteUser = (id) => (dispatch) => {
+  // async loading? on add?
+  dispatch(loading());
+
+  axios
+    .delete(`${SERVER_URL}/${id}`)
+    .then((resp) => dispatch(deleteUser(resp.data.id))) // resp.data.id?
+    .catch((error) => {
+      console.error(error.message);
+      dispatch(errorFetch(error.message));
+    })
+    .finally(() =>
+      // reset alertMsg
+      setTimeout(() => {
+        dispatch(resetAlerts());
+      }, 1500)
+    );
+};
+
+// array
+export function updateUser(users) {
   return {
     type: UPD_USER,
-    payload: user
+    payload: users
   };
 }
 
@@ -130,6 +170,63 @@ export function editing(bool = true) {
     payload: bool
   };
 }
+
+// const updatedUsers = this.props.usersRx.map((user) => {
+//     let newUser = null;
+//     if (user.id === id) {
+//       // eslint-disable-next-line no-param-reassign
+//       newUser = { id, name, username, email };
+//     }
+//     return newUser || user;
+//   });
+
+export const fetchUpdateUser = (updUser, id) => (dispatch, getState) => {
+  // access reducers.state
+  const { users } = getState().userReducer;
+
+  // .put(url, {<to-update>})
+  axios
+    .put(`${SERVER_URL}/${id}`, updUser)
+    .then((resp) => {
+      console.log(resp);
+      const { name, username, email } = resp.data;
+      // do the mapping
+
+      // mutate the selected(id) users-state
+      // do mapping
+      const updatedUserList = users.map((user) => {
+        if (user.id === id) {
+          // replace the old w/ new-update-one
+          return { id, name, username, email };
+        }
+        // just return old-one
+        return user;
+      });
+
+      // all users put back to reducer
+      dispatch(updateUser(updatedUserList));
+    })
+    .catch((error) => {
+      console.error(error.message);
+      dispatch(errorFetch(error.message));
+    })
+    .finally(() =>
+      // reset alertMsg
+      setTimeout(() => {
+        dispatch(resetAlerts());
+      }, 1500)
+    );
+};
+
+// CRUD + search
+
+// user {}
+// export function addUser(user) {
+//   return {
+//     type: ADD_USER,
+//     payload: user
+//   };
+// }
 
 export function searchUser(query) {
   return {

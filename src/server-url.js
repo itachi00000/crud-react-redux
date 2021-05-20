@@ -11,7 +11,7 @@ export function getServerUrl() {
     // use localhost - in development
     // serverUrl = 'http://localhost:3000';
 
-    serverUrl = 'http://localhost:5000/api/robots';
+    serverUrl = 'http://localhost:3000/robots';
   }
   return serverUrl;
 }

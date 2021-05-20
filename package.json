@@ -1,5 +1,6 @@
 {
   "name": "crud-react-redux",
+  "homepage": "https://itachi00000.github.io/crud-react-redux",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -23,22 +24,25 @@
     "react-icons": "3.8.0"
   },
   "devDependencies": {
-    "eslint": "^6.7.1",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0",
-    "prettier": "^1.19.1"
+    "eslint": "6.7.1",
+    "eslint-config-airbnb": "18.0.1",
+    "eslint-config-prettier": "6.7.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-prettier": "3.1.1",
+    "eslint-plugin-react": "7.14.3",
+    "eslint-plugin-react-hooks": "1.7.0",
+    "gh-pages": "3.1.0",
+    "prettier": "1.19.1"
   },
   "peerDependencies": {},
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3006 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages-clean && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

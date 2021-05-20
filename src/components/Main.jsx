@@ -5,18 +5,18 @@ import Table from './Table';
 
 // redux action
 import {
-  deleteUser,
-  addUser,
-  updateUser,
+  fetchUpdateUser,
+  fetchDeleteUser,
+  fetchAddUser,
   fetchAllUsers
 } from '../redux/actions';
 
 // redux dispatch actions
 const mapDispatchToProps = (dispatch) => {
   return {
-    addUserRx: (user) => dispatch(addUser(user)),
-    deleteUserRx: (id) => dispatch(deleteUser(id)),
-    updateUserRx: (id) => dispatch(updateUser(id)),
+    fetchAddUserRx: (user) => dispatch(fetchAddUser(user)),
+    fetchDeleteUserRx: (id) => dispatch(fetchDeleteUser(id)),
+    fetchUpdateUserRx: (updUser, id) => dispatch(fetchUpdateUser(updUser, id)),
     fetchUsersRx: () => dispatch(fetchAllUsers())
   };
 };
@@ -58,7 +58,7 @@ class Main extends React.Component {
     // on editing mode, you cant click delete btn
     if (this.state.status.isEditing) return;
 
-    this.props.deleteUserRx(id);
+    this.props.fetchDeleteUserRx(id);
   }
 
   onEditUser(e, id) {
@@ -74,7 +74,8 @@ class Main extends React.Component {
   }
 
   onUpdateUser(e, { id, name, username, email }) {
-    if (!name.trim() || !username.trim() || !email.trim()) {
+    // if empty, then return back the original
+    if (!name || !username || !email) {
       this.setState((prevState) => {
         return {
           alerts: { ...prevState.alerts, isEmpty: true, alertMsg: 'Enter Text' }
@@ -83,19 +84,8 @@ class Main extends React.Component {
       return;
     }
 
-    // updating the data (users)
-
-    const updatedUsers = this.props.usersRx.map((user) => {
-      let newUser = null;
-      if (user.id === id) {
-        // eslint-disable-next-line no-param-reassign
-        newUser = { id, name, username, email };
-      }
-      return newUser || user;
-    });
-
-    // update redux
-    this.props.updateUserRx(updatedUsers);
+    // update redux, users
+    this.props.fetchUpdateUserRx({ name, username, email }, id);
 
     // reset the status to default
     this.setState({ status: { isEditing: false, currentId: null } });
@@ -110,8 +100,8 @@ class Main extends React.Component {
       });
       return;
     }
-
-    this.props.addUserRx({ id: nextId, name, username, email });
+    // remote id: nextId,
+    this.props.fetchAddUserRx({ name, username, email });
   }
 
   render() {

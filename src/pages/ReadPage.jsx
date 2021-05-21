@@ -5,17 +5,21 @@ import { connect } from 'react-redux';
 // action
 import { fetchUser } from '../redux/actions';
 
+// reselect
+import { selectCurrentUser } from '../redux/users.reselect';
+
 // redux - dispatch
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    fetchUserRx: url => dispatch(fetchUser(url))
+    fetchUserRx: (url) => dispatch(fetchUser(url))
   };
 };
 
 // redux - states
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    currentUserRx: state.userReducer.currentUser,
+    // currentUserRx: state.userReducer.currentUser,
+    currentUserRx: selectCurrentUser(state),
     isLoadingRx: state.userReducer.isLoading,
     isErrorRx: state.userReducer.isError,
     errorMsgRx: state.userReducer.msg
@@ -31,7 +35,9 @@ function ReadPage({
   errorMsgRx,
   match
 }) {
-  const paramsId = Number(match.params.id);
+  const paramsId = parseInt(match.params.id, 10);
+
+  const stableDispatch = {};
 
   useEffect(() => {
     fetchUserRx(paramsId);

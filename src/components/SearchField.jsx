@@ -5,10 +5,14 @@ import { connect } from 'react-redux';
 // action
 import { searchUser } from '../redux/actions';
 
+// reselect
+import { selectInput } from '../redux/users.reselect';
+
 // redux state
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    inputValueRx: state.userReducer.inputValue
+    // inputValueRx: state.userReducer.inputValue
+    inputValueRx: selectInput(state)
   };
 };
 
@@ -22,7 +26,7 @@ function SearchField(props) {
       className="form-control w-75"
       value={inputValueRx}
       placeholder="Search..."
-      onChange={e => dispatch(searchUser(e.target.value))}
+      onChange={(e) => dispatch(searchUser(e.target.value))}
     />
   );
 }

@@ -11,6 +11,13 @@ import {
   fetchAllUsers
 } from '../redux/actions';
 
+// reselect
+import {
+  selectUsers,
+  selectInput,
+  selectAlertMsg
+} from '../redux/users.reselect';
+
 // redux dispatch actions
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -24,11 +31,14 @@ const mapDispatchToProps = (dispatch) => {
 // redux states
 const mapStateToProps = (state) => {
   return {
-    inputValueRx: state.userReducer.inputValue,
-    usersRx: state.userReducer.users,
+    // usersRx: state.userReducer.users,
+    // inputValueRx: state.userReducer.inputValue,
+    // msgRx: state.userReducer.msg
+    usersRx: selectUsers(state),
+    inputValueRx: selectInput(state),
+    msgRx: selectAlertMsg(state),
     isLoadingRx: state.userReducer.isLoading,
-    isErrorRx: state.userReducer.isError,
-    msgRx: state.userReducer.msg
+    isErrorRx: state.userReducer.isError
   };
 };
 
